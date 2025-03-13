@@ -12,6 +12,7 @@ public class MainPage {
     private static final By LOGIN_BUTTON = By.xpath(".//button[text()='Войти в аккаунт']");
     private static final By ACCOUNT_BUTTON = By.xpath(".//*[text()='Личный Кабинет']");
     private static final By MAKE_ORDER_BUTTON = By.xpath(".//button[text()='Оформить заказ']");
+    private static final By MAKE_A_BURGER_TEXT = By.xpath(".//*[text()='Соберите бургер']");
 
     private final WebDriver driver;
 
@@ -29,5 +30,9 @@ public class MainPage {
     public boolean isMakeOrderButtonDisplayed(){
         new WebDriverWait(driver,3).until(ExpectedConditions.presenceOfElementLocated(MAKE_ORDER_BUTTON));
         return driver.findElement(MAKE_ORDER_BUTTON).isDisplayed();
+    }
+    public boolean isContructorOpens(){
+        new WebDriverWait(driver,3).until(ExpectedConditions.presenceOfElementLocated(MAKE_A_BURGER_TEXT));
+        return driver.findElement(MAKE_A_BURGER_TEXT).isDisplayed();
     }
 }
