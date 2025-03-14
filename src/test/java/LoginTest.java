@@ -3,6 +3,9 @@ import PageObject.MainPage;
 import PageObject.RegistrationPage;
 import PageObject.ResetPasswordPage;
 import client.StellarBurgerClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.LoginWay;
 import model.Token;
@@ -42,6 +45,7 @@ public class LoginTest {
         };
     }
     @Before
+    @Step("Test preparation")
     public void before(){
         driver = WebDriverFactory.createWebDriver();
         Faker faker = new Faker(new Locale("en"));
@@ -50,12 +54,15 @@ public class LoginTest {
         token = client.getToken(response);
     }
     @After
+    @Step("Clean data and shutdown")
     public void after(){
         client.deleteUser(token);
         driver.quit();
     }
 
     @Test
+    @DisplayName("Login test")
+    @Description("Test checks transition to login page and is login works fine")
     public void loginThroughTest(){
         openLoginPage(how);
         LoginPage login = new LoginPage(driver);

@@ -1,6 +1,9 @@
 import PageObject.AccountPage;
 import PageObject.MainPage;
 import client.StellarBurgerClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.LoginWay;
 import model.Token;
@@ -22,6 +25,7 @@ public class AccountTest {
     private final StellarBurgerClient client = new StellarBurgerClient();
 
     @Before
+    @Step("Test preparation")
     public void startBrowser() {
         driver = WebDriverFactory.createWebDriver();
         Faker faker = new Faker(new Locale("en"));
@@ -40,6 +44,7 @@ public class AccountTest {
     }
 
     @After
+    @Step("Clean data and shutdown")
     public void tearDown() {
         driver.quit();
         if (token.getAccessToken()!=null){
@@ -48,6 +53,8 @@ public class AccountTest {
     }
 
     @Test
+    @DisplayName("Account page test")
+    @Description("Check if account page opens")
     public void AccountPageOpenTest(){
         MainPage main = new MainPage(driver);
         main.loginPageOpenWith(LoginWay.MAIN_ACCOUNT);

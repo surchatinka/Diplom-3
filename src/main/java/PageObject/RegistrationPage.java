@@ -1,5 +1,6 @@
 package PageObject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -18,19 +19,19 @@ public class RegistrationPage {
         this.driver = driver;
     }
 
-    public void waitForElementLoad()
-    {
-        //webDriver.findElement(NAME_FIELD).wait();
-    }
+    @Step("Input name to field")
     private void inputName(String name){
         driver.findElement(NAME_FIELD).sendKeys(name);
     }
+    @Step("Input email to field")
     private void inputEmail(String email){
         driver.findElement(EMAIL_FIELD).sendKeys(email);
     }
+    @Step("Input password to field")
     private void inputPassword(String password){
         driver.findElement(PASSWORD_FIELD).sendKeys(password);
     }
+    @Step("Click to register button")
     private void registerButtonClick(){
         driver.findElement(REGISTER_BUTTON).click();
     }
@@ -40,12 +41,12 @@ public class RegistrationPage {
         inputPassword(password);
         registerButtonClick();
     }
-
+    @Step("Click to login link")
     public void loginLinkClick(){
         driver.findElement(LOGIN_LINK).click();
     }
+    @Step("Check if error appears")
     public boolean isPasswordFieldErrorVisible(){
         return driver.findElement(PASSWORD_FIELD_ERROR_TEXT).isDisplayed();
     }
-    //error message for wrong password length test
 }

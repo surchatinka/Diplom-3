@@ -1,9 +1,10 @@
 import PageObject.AccountPage;
 import PageObject.LoginPage;
-import PageObject.MainPage;
 import client.StellarBurgerClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import model.ConstructorOpenWay;
 import model.Token;
 import model.User;
 import model.WebDriverFactory;
@@ -24,6 +25,8 @@ public class LogoutTest {
    private final StellarBurgerClient client = new StellarBurgerClient();
 
    @Test
+   @DisplayName("Logout test")
+   @Description("Test checks how logout works")
    public void logoutFromAccountPageTest(){
        driver.get("https://stellarburgers.nomoreparties.site/account");
        AccountPage accountPage = new AccountPage(driver);
@@ -34,6 +37,7 @@ public class LogoutTest {
     }
 
    @Before
+   @Step("Test preparation")
    public void startBrowser() {
         driver = WebDriverFactory.createWebDriver();
         Faker faker = new Faker(new Locale("en"));
@@ -53,6 +57,7 @@ public class LogoutTest {
     }
 
    @After
+   @Step("Clean data and shutdown")
    public void tearDown() {
         driver.quit();
         if (token.getAccessToken()!=null){

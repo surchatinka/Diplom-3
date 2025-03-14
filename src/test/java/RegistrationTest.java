@@ -2,6 +2,9 @@ import PageObject.LoginPage;
 import PageObject.MainPage;
 import PageObject.RegistrationPage;
 import client.StellarBurgerClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.*;
 import net.datafaker.Faker;
@@ -36,6 +39,8 @@ public class RegistrationTest {
         };
     }
 
+    @DisplayName("Register user test")
+    @Description("Test checks if its possible or impossible to make user with premade password length")
     @Test
     public void passwordLengthTest(){
         MainPage mainPage = new MainPage(driver);
@@ -55,6 +60,7 @@ public class RegistrationTest {
     }
 
     @Before
+    @Step("Test preparation")
     public void before() {
         driver = WebDriverFactory.createWebDriver();
         Faker faker = new Faker(new Locale("en"));
@@ -69,6 +75,7 @@ public class RegistrationTest {
     }
 
     @After
+    @Step("Clean data and shutdown")
     public void after() {
         driver.quit();
         ValidatableResponse response = client.loginUser(user);

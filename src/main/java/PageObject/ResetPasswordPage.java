@@ -1,5 +1,6 @@
 package PageObject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -12,6 +13,7 @@ public class ResetPasswordPage {
         this.driver = driver;
     }
 
+    @Step("Click to login link")
     public void loginLinkClick(){
         driver.findElement(LOGIN_LINK).click();
     }

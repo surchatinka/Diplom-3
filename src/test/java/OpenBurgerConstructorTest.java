@@ -1,6 +1,9 @@
 import PageObject.AccountPage;
 import PageObject.MainPage;
 import client.StellarBurgerClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import model.*;
 import net.datafaker.Faker;
@@ -23,6 +26,7 @@ public class OpenBurgerConstructorTest {
     private final ConstructorOpenWay way;
 
     @Before
+    @Step("Test preparation")
     public void startBrowser() {
         driver = WebDriverFactory.createWebDriver();
         Faker faker = new Faker(new Locale("en"));
@@ -42,6 +46,7 @@ public class OpenBurgerConstructorTest {
     }
 
     @After
+    @Step("Clean data and shutdown")
     public void tearDown() {
         driver.quit();
         if (token.getAccessToken()!=null){
@@ -62,6 +67,8 @@ public class OpenBurgerConstructorTest {
     }
 
     @Test
+    @DisplayName("Account open test")
+    @Description("Test check if page with personal data opens")
     public void AccountPageOpenTest(){
         driver.get("https://stellarburgers.nomoreparties.site/account");
         AccountPage accountPage = new AccountPage(driver);

@@ -1,6 +1,7 @@
 package PageObject;
 
 
+import io.qameta.allure.Step;
 import model.BurgerSection;
 import model.LoginWay;
 import org.openqa.selenium.*;
@@ -25,6 +26,7 @@ public class MainPage {
         this.driver=driver;
     }
 
+    @Step("Click to login button")
     public void loginPageOpenWith(LoginWay way){
        switch (way){
            case MAIN_LOGIN: driver.findElement(LOGIN_BUTTON).click(); break;
@@ -32,15 +34,17 @@ public class MainPage {
            default: throw new RuntimeException("Not a main page login way");
        }
     }
+    @Step("Check is page loaded")
     public boolean isMakeOrderButtonDisplayed(){
         new WebDriverWait(driver,3).until(ExpectedConditions.presenceOfElementLocated(MAKE_ORDER_BUTTON));
         return driver.findElement(MAKE_ORDER_BUTTON).isDisplayed();
     }
+    @Step("Check is constructor opened")
     public boolean isConstructorOpens(){
         new WebDriverWait(driver,3).until(ExpectedConditions.presenceOfElementLocated(MAKE_A_BURGER_TEXT));
         return driver.findElement(MAKE_A_BURGER_TEXT).isDisplayed();
     }
-
+    @Step("Check is element viewable")
     public boolean isElementInViewport(BurgerSection burgerSection){
         WebElement element;
         switch(burgerSection){
