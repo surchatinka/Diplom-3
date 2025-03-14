@@ -67,7 +67,7 @@ public class OpenBurgerConstructorTest {
         AccountPage accountPage = new AccountPage(driver);
         accountPage.openConstructor(way);
         MainPage reopenedMain = new MainPage(driver);
-        boolean result = reopenedMain.isMakeOrderButtonDisplayed() && reopenedMain.isContructorOpens();
+        boolean result = reopenedMain.isMakeOrderButtonDisplayed() && reopenedMain.isConstructorOpens();
         Assert.assertTrue(result);
     }
 }
