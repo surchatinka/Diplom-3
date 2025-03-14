@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AccountPage {
     private static final By PROFILE_SECTION_TEXT = By.xpath(".//*[@href='/account/profile']");
-    private static final By LOGOUT_BUTTON = By.linkText("Выход");
+    private static final By LOGOUT_BUTTON = By.xpath(".//*[text()='Выход']");// linkText("Выход");
         //$x(".//*[text()='Выход']")
     private static final By STELLAR_BURGER_LOGO = By.xpath(".//*[contains(@class,'logo')]");
     private static final By CONSTRUCTOR_BUTTON = By.linkText("Конструктор");
@@ -23,6 +23,7 @@ public class AccountPage {
         return driver.findElement(PROFILE_SECTION_TEXT).isDisplayed();
     }
     public void logoutButtonClick(){
+        new WebDriverWait(driver,3).until(ExpectedConditions.presenceOfElementLocated(LOGOUT_BUTTON));
         driver.findElement(LOGOUT_BUTTON).click();
     }
     public void openConstructor(ConstructorOpenWay button){

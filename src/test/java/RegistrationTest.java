@@ -55,7 +55,7 @@ public class RegistrationTest {
     }
 
     @Before
-    public void startBrowser() {
+    public void before() {
         driver = WebDriverFactory.createWebDriver();
         Faker faker = new Faker(new Locale("en"));
         String email = faker.internet().emailAddress();
@@ -69,7 +69,7 @@ public class RegistrationTest {
     }
 
     @After
-    public void tearDown() {
+    public void after() {
         driver.quit();
         ValidatableResponse response = client.loginUser(user);
         Token token = client.getToken(response);

@@ -6,8 +6,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class WebDriverFactory {
 
+    private static final String BROWSER_PROPERTY = "browser";
+    private static final String DEFAULT_BROWSER = "chrome";
     private static final String WEBDRIVER_CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
-    private static final String DEFAULT_BROWSER = "CHROME";
 
     public static WebDriver createWebDriver() {
 
@@ -28,7 +29,8 @@ public class WebDriverFactory {
         }
     }
     private static Browser getActiveBrowser(){
-        String browserName = System.getenv("browser");
+        String browserName = System.getProperty(BROWSER_PROPERTY, DEFAULT_BROWSER);
+        //String browserName = System.getenv("browser");
         if (browserName.isEmpty()) {
             return Browser.valueOf(DEFAULT_BROWSER);
         }

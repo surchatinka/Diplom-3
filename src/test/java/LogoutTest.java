@@ -1,29 +1,40 @@
 import PageObject.AccountPage;
+import PageObject.LoginPage;
 import PageObject.MainPage;
 import client.StellarBurgerClient;
 import io.restassured.response.ValidatableResponse;
-import model.*;
+import model.ConstructorOpenWay;
+import model.Token;
+import model.User;
+import model.WebDriverFactory;
 import net.datafaker.Faker;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Locale;
 
-@RunWith(Parameterized.class)
-public class OpenBurgerConstructorTest {
-    private Token token;
-    private WebDriver driver;
-    private final StellarBurgerClient client = new StellarBurgerClient();
-    private final ConstructorOpenWay way;
+public class LogoutTest {
 
-    @Before
-    public void startBrowser() {
+   private WebDriver driver;
+   private Token token;
+   private final StellarBurgerClient client = new StellarBurgerClient();
+
+   @Test
+   public void logoutFromAccountPageTest(){
+       driver.get("https://stellarburgers.nomoreparties.site/account");
+       AccountPage accountPage = new AccountPage(driver);
+       accountPage.logoutButtonClick();
+       LoginPage loginPage = new LoginPage(driver);
+       boolean result = loginPage.isPageOpened();
+       Assert.assertTrue(result);
+    }
+
+   @Before
+   public void startBrowser() {
         driver = WebDriverFactory.createWebDriver();
         Faker faker = new Faker(new Locale("en"));
         String email = faker.internet().emailAddress();
@@ -41,33 +52,11 @@ public class OpenBurgerConstructorTest {
         driver.navigate().refresh();
     }
 
-    @After
-    public void tearDown() {
+   @After
+   public void tearDown() {
         driver.quit();
         if (token.getAccessToken()!=null){
             client.deleteUser(token);
         }
-    }
-
-    public OpenBurgerConstructorTest(ConstructorOpenWay way){
-        this.way=way;
-    }
-
-    @Parameterized.Parameters
-    public static Object[][] getValues(){
-        return new Object[][]{
-                {ConstructorOpenWay.BUTTON},
-                {ConstructorOpenWay.LOGO}
-        };
-    }
-
-    @Test
-    public void AccountPageOpenTest(){
-        driver.get("https://stellarburgers.nomoreparties.site/account");
-        AccountPage accountPage = new AccountPage(driver);
-        accountPage.openConstructor(way);
-        MainPage reopenedMain = new MainPage(driver);
-        boolean result = reopenedMain.isMakeOrderButtonDisplayed() && reopenedMain.isContructorOpens();
-        Assert.assertTrue(result);
     }
 }
