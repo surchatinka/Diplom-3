@@ -16,6 +16,7 @@
 | Owner       | 1.0.4    |
 | Selenium    | 3.141.59 |
 
-## Порядок запуска проекта
-1) Перекомпиляция `mvn clean test`
-2) Отчет Allure `mvn allure:serve`
+## Полезные команды
+* Для тестов в Yandex `mvn clean test -Dbrowser=yandex`
+* Для тестов в Chrome `mvn clean test -Dbrowser=chrome`
+* Для отчета Allure `mvn allure:serve`
