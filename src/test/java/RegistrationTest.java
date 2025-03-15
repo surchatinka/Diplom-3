@@ -1,12 +1,15 @@
-import PageObject.LoginPage;
-import PageObject.MainPage;
-import PageObject.RegistrationPage;
-import client.StellarBurgerClient;
+import ru.model.LoginWay;
+import ru.model.Token;
+import ru.model.User;
+import ru.model.WebDriverFactory;
+import ru.page.object.LoginPage;
+import ru.page.object.MainPage;
+import ru.page.object.RegistrationPage;
+import ru.client.StellarBurgerClient;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import model.*;
 import net.datafaker.Faker;
 import net.datafaker.providers.base.Text;
 import org.junit.*;
@@ -16,6 +19,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Locale;
 import static net.datafaker.providers.base.Text.DIGITS;
 import static net.datafaker.providers.base.Text.EN_UPPERCASE;
+import static ru.model.Endpoints.MAIN_PAGE;
 
 @RunWith(Parameterized.class)
 public class RegistrationTest {
@@ -31,7 +35,7 @@ public class RegistrationTest {
         this.result = result;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Password length: {0}; Expected result: {1}")
     public static Object[][] getTestData(){
         return new Object[][]{
                 {MIN_PASSWORD_LENGTH,true},
@@ -44,7 +48,7 @@ public class RegistrationTest {
     @Test
     public void passwordLengthTest(){
         MainPage mainPage = new MainPage(driver);
-        mainPage.loginPageOpenWith(LoginWay.MAIN_LOGIN);
+        mainPage.loginPageOpenWith(LoginWay.MAIN_PAGE_LOGIN_BUTTON);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.registerLinkClick();
         RegistrationPage registrationPage = new RegistrationPage(driver);
@@ -71,7 +75,7 @@ public class RegistrationTest {
                 .with(EN_UPPERCASE, 2)
                 .with(DIGITS, 3).build());
         user = new User(email,password,name);
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(MAIN_PAGE);
     }
 
     @After

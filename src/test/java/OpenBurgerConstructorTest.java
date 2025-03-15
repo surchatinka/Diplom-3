@@ -1,11 +1,14 @@
-import PageObject.AccountPage;
-import PageObject.MainPage;
-import client.StellarBurgerClient;
+import ru.model.ConstructorOpenWay;
+import ru.model.Token;
+import ru.model.User;
+import ru.model.WebDriverFactory;
+import ru.page.object.AccountPage;
+import ru.page.object.MainPage;
+import ru.client.StellarBurgerClient;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import model.*;
 import net.datafaker.Faker;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,8 +18,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-
 import java.util.Locale;
+import static ru.model.Endpoints.ACCOUNT_PAGE;
 
 @RunWith(Parameterized.class)
 public class OpenBurgerConstructorTest {
@@ -36,7 +39,7 @@ public class OpenBurgerConstructorTest {
         User user = new User(email,password,name);
         ValidatableResponse response = client.createUser(user);
         token = client.getToken(response);
-        driver.get("https://stellarburgers.nomoreparties.site/account");
+        driver.get(ACCOUNT_PAGE);
         JavascriptExecutor exec = (JavascriptExecutor)driver;
         String scriptAccessToken = String.format("window.localStorage.setItem('accessToken', '%s')",token.getAccessToken());
         String scriptRefreshToken = String.format("window.localStorage.setItem('refreshToken', '%s')",token.getRefreshToken());
@@ -58,7 +61,7 @@ public class OpenBurgerConstructorTest {
         this.way=way;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Open page using {0}")
     public static Object[][] getValues(){
         return new Object[][]{
                 {ConstructorOpenWay.BUTTON},
@@ -70,7 +73,7 @@ public class OpenBurgerConstructorTest {
     @DisplayName("Account open test")
     @Description("Test check if page with personal data opens")
     public void AccountPageOpenTest(){
-        driver.get("https://stellarburgers.nomoreparties.site/account");
+        driver.get(ACCOUNT_PAGE);
         AccountPage accountPage = new AccountPage(driver);
         accountPage.openConstructor(way);
         MainPage reopenedMain = new MainPage(driver);

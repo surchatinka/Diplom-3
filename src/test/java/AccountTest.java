@@ -1,14 +1,14 @@
-import PageObject.AccountPage;
-import PageObject.MainPage;
-import client.StellarBurgerClient;
+import ru.page.object.AccountPage;
+import ru.page.object.MainPage;
+import ru.client.StellarBurgerClient;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import model.LoginWay;
-import model.Token;
-import model.User;
-import model.WebDriverFactory;
+import ru.model.LoginWay;
+import ru.model.Token;
+import ru.model.User;
+import ru.model.WebDriverFactory;
 import net.datafaker.Faker;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import java.util.Locale;
+import static ru.model.Endpoints.MAIN_PAGE;
 
 public class AccountTest {
 
@@ -35,7 +36,7 @@ public class AccountTest {
         User user = new User(email,password,name);
         ValidatableResponse response = client.createUser(user);
         token = client.getToken(response);
-        driver.get("https://stellarburgers.nomoreparties.site");
+        driver.get(MAIN_PAGE);
         JavascriptExecutor exec = (JavascriptExecutor)driver;
         String scriptAccessToken = String.format("window.localStorage.setItem('accessToken', '%s')",token.getAccessToken());
         String scriptRefreshToken = String.format("window.localStorage.setItem('refreshToken', '%s')",token.getRefreshToken());
@@ -57,7 +58,7 @@ public class AccountTest {
     @Description("Check if account page opens")
     public void AccountPageOpenTest(){
         MainPage main = new MainPage(driver);
-        main.loginPageOpenWith(LoginWay.MAIN_ACCOUNT);
+        main.loginPageOpenWith(LoginWay.MAIN_PAGE_ACCOUNT_BUTTON);
         AccountPage accountPage = new AccountPage(driver);
         boolean result = accountPage.isPageLoaded();
         Assert.assertTrue(result);
