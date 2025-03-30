@@ -16,6 +16,7 @@ public class MainPage {
     private static final By BUN_SECTION_TAB = By.xpath(".//span[text()='Булки']/parent::*");
     private static final By SAUCE_SECTION_TAB = By.xpath(".//span[text()='Соусы']/parent::*");
     private static final By INGREDIENT_SECTION_TAB = By.xpath(".//span[text()='Начинки']/parent::*");
+    private static final String CURRENT_TAB = "tab_tab_type_current__2BEPc";
     private final WebDriver driver;
 
     public MainPage(WebDriver driver){
@@ -50,21 +51,21 @@ public class MainPage {
             case INGREDIENTS:
                 return isIngredientSectionInViewport();
             default:
-                throw new IllegalArgumentException("No such section in burger constructor- " + burgerSection);
+                throw new IllegalArgumentException("No such section in burger constructor - " + burgerSection);
         }
     }
     @Step("Check is bun section viewable")
     private boolean isBunSectionInViewport() {
-        return driver.findElement(BUN_SECTION_TAB).getAttribute("class").contains("tab_tab_type_current__2BEPc");
+        return driver.findElement(BUN_SECTION_TAB).getAttribute("class").contains(CURRENT_TAB);
     }
     @Step("Check is sauce section viewable")
     private boolean isSauceSectionInViewport() {
         driver.findElement(SAUCE_SECTION_TAB).click();
-        return driver.findElement(SAUCE_SECTION_TAB).getAttribute("class").contains("tab_tab_type_current__2BEPc");
+        return driver.findElement(SAUCE_SECTION_TAB).getAttribute("class").contains(CURRENT_TAB);
     }
     @Step("Check is ingredient section viewable")
     private boolean isIngredientSectionInViewport() {
         driver.findElement(INGREDIENT_SECTION_TAB).click();
-        return driver.findElement(INGREDIENT_SECTION_TAB).getAttribute("class").contains("tab_tab_type_current__2BEPc");
+        return driver.findElement(INGREDIENT_SECTION_TAB).getAttribute("class").contains(CURRENT_TAB);
     }
 }
