@@ -1,0 +1,8 @@
+package ru.model;
+
+public enum LoginWay {
+    MAIN_PAGE_LOGIN_BUTTON,
+    MAIN_PAGE_ACCOUNT_BUTTON,
+    REGISTRATION_PAGE_LOGIN_LINK,
+    RESET_PASSWORD_PAGE_LOGIN_LINK
+}
